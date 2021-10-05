@@ -95,11 +95,34 @@ describe("Testing the server", () => {
     expect(idResponse.body.name).toEqual(validProduct.name);
   });
 
+  const mockProduct = {
+    name: "mac book pro",
+    price: 1600,
+    _id: "615c6ee41d63f8c84c879ebf",
+    createdAt: "2021-10-05T15:27:32.438Z",
+    updatedAt: "2021-10-05T15:27:32.438Z",
+  };
+
+  it("should test that a GET /products endpoint is returning a 200", async () => {
+    const response = await request.get("/products/" + mockProduct._id);
+
+    expect(response.status).toBe(200);
+  });
+
   it("should test that a GET /products endpoint is returning a 404 in case not found", async () => {
-    const response = await request
-      .get("/products/" + request.params.id)
-      .status(404)
-      .send("Product not found!");
+    const response = await request.get("/products/not-existing");
+
+    expect(response.status).toBe(404);
+  });
+
+  it("should test that a PUT /products endpoint is returning a 404 in case not found", async () => {
+    const response = await request.put("/products/not-existing");
+
+    expect(response.status).toBe(404);
+  });
+
+  it("should test that a DELETE /products endpoint is returning a 404 in case not found", async () => {
+    const response = await request.delete("/products/not-existing");
 
     expect(response.status).toBe(404);
   });

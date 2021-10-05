@@ -34,7 +34,7 @@ productsRouter.put("/:id", async (req, res) => {
       req.body,
       { new: true }
     );
-    if (product) {
+    if (updatedProduct) {
       res.send(updatedProduct);
     } else {
       res.status(404).send("Product not found!");
