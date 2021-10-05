@@ -94,4 +94,13 @@ describe("Testing the server", () => {
     const idResponse = await request.get("/products/" + response.body._id);
     expect(idResponse.body.name).toEqual(validProduct.name);
   });
+
+  it("should test that a GET /products endpoint is returning a 404 in case not found", async () => {
+    const response = await request
+      .get("/products/" + request.params.id)
+      .status(404)
+      .send("Product not found!");
+
+    expect(response.status).toBe(404);
+  });
 });
